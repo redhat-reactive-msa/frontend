@@ -18,8 +18,6 @@ public class FrontendVerticle extends AbstractVerticle {
   public void start() {
     Router router = Router.router(vertx);
 
-
-
     // API Gateway
     APIGateway gateway = new APIGateway(vertx);
     router.get("/api").handler(gateway::invokeAll);
