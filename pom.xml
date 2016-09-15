@@ -10,7 +10,7 @@
   <version>0.0.1-SNAPSHOT</version>
 
   <properties>
-    <vertx.version>3.3.0-SNAPSHOT</vertx.version>
+    <vertx.version>3.3.3</vertx.version>
     <main.verticle>com.redhat.developers.msa.reactive.frontend.FrontendVerticle</main.verticle>
   </properties>
 
@@ -35,7 +35,8 @@
 
     <dependency>
       <groupId>io.vertx</groupId>
-      <artifactId>vertx-hazelcast</artifactId>
+      <artifactId>vertx-zookeeper</artifactId>
+      <version>3.3.3</version>
     </dependency>
 
     <dependency>
@@ -146,16 +147,7 @@
                       <port>8080</port>
                     </ports>
                     <workdir>/opt</workdir>
-                    <entryPoint>
-                      <exec>
-                        <arg>java</arg>
-                        <arg>-jar</arg>
-                        <arg>${project.artifactId}-${project.version}-fat.jar</arg>
-                        <arg>-cluster</arg>
-                        <arg>-cp</arg>
-                        <arg>.</arg>
-                      </exec>
-                    </entryPoint>
+                    <entryPoint>java -Dvertx.zookeeper.hosts=${ZOOKEEPER_SERVICE_HOST} -jar ${project.artifactId}-${project.version}-fat.jar -cluster -cp .</entryPoint>
                     <runCmds>
                       <runcmd>chmod -R 777 /opt</runcmd>
                       <runcmd>chmod -R 777 /opt/*</runcmd>
